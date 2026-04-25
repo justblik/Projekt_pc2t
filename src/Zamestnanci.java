@@ -10,14 +10,12 @@ abstract public class Zamestnanci
 	protected Uroven_spoluprace uroven_spoluprace;
 	protected List<Zamestnanci> seznam_spolupracovniku = new ArrayList<Zamestnanci>();
 	
-	public Zamestnanci(int id,String jmeno,String prijmeni,int rok_narozeni/*, Uroven_spoluprace uroven_spoluprace, List<Zamestnanci> seznam_spolupracovniku*/)
+	public Zamestnanci(int id,String jmeno,String prijmeni,int rok_narozeni)
 	{
 		this.id = id;
 		this.jmeno = jmeno;
 		this.prijmeni = prijmeni;
 		this.rok_narozeni = rok_narozeni;
-		/*this.uroven_spoluprace = uroven_spoluprace;
-		this.seznam_spolupracovniku = seznam_spolupracovniku;*/
 	}
 
 	public int getId() 
