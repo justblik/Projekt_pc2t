@@ -12,7 +12,7 @@ public enum Uroven_spoluprace {
 		this.typ=typ;
 	}
 		
-	public String getTyp(String typ)
+	public String getTyp()
 	{
 		return typ;
 	}

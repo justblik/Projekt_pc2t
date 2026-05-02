@@ -36,7 +36,7 @@ public class mainik {
 	{
 		int menu_vyber;
 		int did=0;
-		int i=0;
+
 		Scanner sc = new Scanner(System.in);
 		Map<Integer, Zamestnanci> mapa_zamestnanci = new HashMap<>();
 		
@@ -44,7 +44,7 @@ public class mainik {
 		{
 			System.out.println("------------MENU----------------------------------------------");
 			System.out.println("1\tPridani zamestnance");										//DONE
-			System.out.println("2\tPridani spoluprace");
+			System.out.println("2\tPridani spoluprace");										//DONE
 			System.out.println("3\tOdebrani zamestnance");										//DONE
 			System.out.println("4\tVyhledani zamestnance dle ID");								//DONE
 			System.out.println("5\tSpusteni dovednosti zamestnance");
@@ -131,7 +131,95 @@ public class mainik {
 					
 				}
 				break;
-			case 2:break;
+			case 2:
+				int uroven_vyber;
+				int idZamestnance;
+				int idKolegy;
+				
+				for(;;) {
+				    System.out.println("Zadejte ID zamestnance:");
+
+				    if (!sc.hasNextInt()) {
+				        System.out.println("\nŠpatný vstup, zkuste to znovu\n\n");
+				        sc.next();
+				        continue;
+				    }
+
+				    idZamestnance = sc.nextInt();
+
+				    if (!mapa_zamestnanci.containsKey(idZamestnance)) {
+				        System.out.println("ID zamestnance neexistuje");
+				        continue;
+				    }
+
+				    break;
+				}
+				
+				for(;;) {
+				    System.out.println("Zadejte ID kolegy:");
+
+				    if (!sc.hasNextInt()) {
+				        System.out.println("\nŠpatný vstup, zkuste to znovu\n\n");
+				        sc.next();
+				        continue;
+				    }
+
+				    idKolegy = sc.nextInt();
+
+				    if (!mapa_zamestnanci.containsKey(idKolegy)) {
+				        System.out.println("ID kolegy neexistuje");
+				        continue;
+				    }
+
+				    break;
+				}
+			
+				if(idZamestnance == idKolegy) 
+				{
+					System.out.println("Zamestnanec nemuze spolupracovat sam se sebou");
+					continue;
+				}
+				
+				Zamestnanci zamestnanec = mapa_zamestnanci.get(idZamestnance);
+				Zamestnanci kolega = mapa_zamestnanci.get(idKolegy);
+				
+				Uroven_spoluprace uroven = null;
+				
+				for(;;) {
+					System.out.println("Vyberte uroven spoluprace: \n1 Spatna\n2 Prumerna\n3 Dobra");
+					
+					if (!sc.hasNextInt()) 
+					{
+					    System.out.println("\nŠpatný vstup, zkuste to znovu\n\n");
+					    sc.next();
+					    continue;
+					}
+					
+					uroven_vyber = sc.nextInt();
+					
+					if(uroven_vyber<1 || uroven_vyber>3)
+					{
+						System.out.println("\nŠpatný vstup, zkuste to znovuX\n\n");
+						continue;
+					}
+				
+					switch(uroven_vyber) {
+					case 1: uroven = Uroven_spoluprace.SPATNA; break;
+					case 2: uroven = Uroven_spoluprace.PRUMERNA; break;
+					case 3: uroven = Uroven_spoluprace.DOBRA; break;
+					}
+					break;					
+				}
+				
+					
+				Spoluprace spoluprace1 = new Spoluprace(kolega, uroven);
+			    Spoluprace spoluprace2 = new Spoluprace(zamestnanec, uroven);
+
+			    zamestnanec.getSeznam_spolupracovniku().add(spoluprace1);
+			    kolega.getSeznam_spolupracovniku().add(spoluprace2);
+
+			    System.out.println("Spoluprace byla pridana");
+				break;
 			case 3:
 				System.out.println("Zadejte ID zamestnance, ktereho chcete odebrat:");
 				int hledane_id = sc.nextInt();
@@ -185,7 +273,7 @@ public class mainik {
 				
 				for(Zamestnanci s : seznam_zamestnancu)
 				{
-					System.out.println(s.getId() + ": " + s.getPrijmeni() + " " + s.getJmeno() + " " + s.getRok_narozeni());
+					System.out.println("[" + s.getId() + "]" + ": " + s.getPrijmeni() + " " + s.getJmeno() + " " + s.getRok_narozeni());
 				}
 				
 				seznam_zamestnancu.clear();
@@ -205,7 +293,7 @@ public class mainik {
 				
 				for(Zamestnanci s : seznam_zamestnancu)
 				{
-					System.out.println(s.getId() + ": " + s.getPrijmeni() + " " + s.getJmeno() + " " + s.getRok_narozeni());
+					System.out.println("[" + s.getId() + "]" + ": " + s.getPrijmeni() + " " + s.getJmeno() + " " + s.getRok_narozeni());
 				}
 				seznam_zamestnancu.clear();
 				

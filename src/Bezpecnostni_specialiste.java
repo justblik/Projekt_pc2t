@@ -1,4 +1,4 @@
-import java.util.List;
+
 
 public class Bezpecnostni_specialiste extends Zamestnanci
 {

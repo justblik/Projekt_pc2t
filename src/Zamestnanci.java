@@ -7,8 +7,7 @@ abstract public class Zamestnanci
 	protected String jmeno;
 	protected String prijmeni;
 	protected int rok_narozeni;
-	protected Uroven_spoluprace uroven_spoluprace;
-	protected List<Zamestnanci> seznam_spolupracovniku = new ArrayList<Zamestnanci>();
+	protected List<Spoluprace> seznam_spolupracovniku = new ArrayList<>();
 	
 	public Zamestnanci(int id,String jmeno,String prijmeni,int rok_narozeni)
 	{
@@ -56,6 +55,17 @@ abstract public class Zamestnanci
 	public void setRok_narozeni(int rok_narozeni) 
 	{
 		this.rok_narozeni = rok_narozeni;
+	}
+	
+
+	public List<Spoluprace> getSeznam_spolupracovniku() 
+	{
+		return seznam_spolupracovniku;
+	}
+
+	public void setSeznam_spolupracovniku(List<Spoluprace> seznam_spolupracovniku) 
+	{
+		this.seznam_spolupracovniku = seznam_spolupracovniku;
 	}
 
 	
