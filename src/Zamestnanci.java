@@ -67,6 +67,8 @@ abstract public class Zamestnanci
 	{
 		this.seznam_spolupracovniku = seznam_spolupracovniku;
 	}
+	
+	public abstract void provedDovednost();
 
 	
 	
