@@ -38,7 +38,7 @@ public class mainik {
 	public static void main(String[] args) 
 	{
 		int menu_vyber;
-		int did=0;
+		int did;
 
 		Scanner sc = new Scanner(System.in);
 		Map<Integer, Zamestnanci> mapa_zamestnanci = new HashMap<>();
@@ -55,21 +55,33 @@ public class mainik {
 			System.out.println("7\tStatistiky");												//DONE	
 			System.out.println("8\tVypis poctu zamestnancu ve skupinach");						//DONE
 			System.out.println("9\tUlozeni zamestnance do souboru");							//DONE	
-			System.out.println("10\tNacteni zamestnance ze souboru");							//DONE
+			System.out.println("10\tNacteni zamestnancu ze souboru");							//DONE
 			System.out.println("11\tUlozeni vsech dat do SQL databaze po skonceni programu");
 			System.out.println("12\tNacteni vsech dat z SQL databaze po spusteni programu");
 			System.out.println("13\tKONEC");													//DONE
 			System.out.println("--------------------------------------------------------------");
 			
-			System.out.println("\nVyberte cislo z nabidky: ");
+			//System.out.println("\nVyberte cislo z nabidky: ");
+			for(;;) {
+				System.out.println("\nVyberte cislo z nabidky: ");
+
+			    if (!sc.hasNextInt()) {
+			        System.out.println("\nŠpatný vstup, zkuste to znovu\n\n");
+			        sc.next();
+			        continue;
+			    }
+
+			    menu_vyber = sc.nextInt();
+			    break;
+			}
 			
-			if (!sc.hasNextInt()) 
+			/*if (!sc.hasNextInt()) 
 			{
 			    System.out.println("\nŠpatný vstup, zkuste to znovu\n\n");
 			    sc.next();
 			}
 			
-			menu_vyber=sc.nextInt();
+			menu_vyber=sc.nextInt();*/
 			
 			if(menu_vyber<1 || menu_vyber>13)
 			{
@@ -81,26 +93,34 @@ public class mainik {
 			{
 			case 1:		
 				int skupina_vyber;
-				for(;;)
-				{
+				for(;;) {
 					System.out.println("Vyberte skupinu: \n1 Datovi analytici\n2 bezpecnostni specialiste");
-					if (!sc.hasNextInt()) 
-					{
-					    System.out.println("\nŠpatný vstup, zkuste to znovu\n\n");
-					    sc.next();
-					}
-					skupina_vyber=sc.nextInt();
-					
-					if(skupina_vyber<1 || skupina_vyber>2)
-					{
-						System.out.println("\nŠpatný vstup, zkuste to znovu\n\n");
-						continue;
-					}
-					else
-					{
-						break;
-					}
+
+				    if (!sc.hasNextInt()) {
+				        System.out.println("\nŠpatný vstup, zkuste to znovu\n\n");
+				        sc.next();
+				        continue;
+				    }
+
+				    skupina_vyber = sc.nextInt();
+				    break;
 				}
+		
+				if(skupina_vyber<1 || skupina_vyber>2){
+					System.out.println("\nŠpatný vstup, zkuste to znovu\n\n");
+					continue;
+				}
+				
+				int maxId = 0;
+
+				for (int id : mapa_zamestnanci.keySet()) {
+				    if (id > maxId) {
+				        maxId = id;
+				    }
+				}
+
+				did = maxId + 1;
+				
 				if(skupina_vyber==1)
 				{
 					sc.nextLine();
@@ -259,22 +279,30 @@ public class mainik {
 				}
 				mapa_zamestnanci.remove(hledane_id);
 				System.out.println("Zamestnanec "+ z.getPrijmeni() +" odstraněn");
-				//TOHLE SE MUSI PREDELAT, PROTOZE, TAKHLE TO SICE SMAZE Z MAPY, ALE V ZADANI JE ODEBRANI VCETNE VSECH VAZEB
-				/*if(mapa_zamestnanci.containsKey(hledane_id))
-				{
-					mapa_zamestnanci.remove(hledane_id);
-					System.out.println("Zamestnanec "+ z.getPrijmeni() +" odstraněn");
-				}
-				else
-				{
-					System.out.println("Zamestnanec s id: "+ hledane_id + " neexistuje");
-				}*/
 				break;
 			case 4:
-				System.out.println("Zadejte ID zamestnance, ktereho chcete vyhledat:");
-				hledane_id = sc.nextInt();
 				
-				Zamestnanci zam = mapa_zamestnanci.get(hledane_id);
+				int hledane_id1;
+				for(;;) {
+					System.out.println("Zadejte ID zamestnance, ktereho chcete vyhledat:");
+
+				    if (!sc.hasNextInt()) {
+				        System.out.println("\nŠpatný vstup, zkuste to znovu\n\n");
+				        sc.next();
+				        continue;
+				    }
+
+				    hledane_id1 = sc.nextInt();
+
+				    if (!mapa_zamestnanci.containsKey(hledane_id1)) {
+				        System.out.println("ID zamestnance neexistuje");
+				        continue;
+				    }
+
+				    break;
+				}
+				
+				Zamestnanci zam = mapa_zamestnanci.get(hledane_id1);
 				
 				if(zam != null)
 				{
@@ -378,14 +406,22 @@ public class mainik {
 			    		}
 			    	}
 			    }
-			
-			    if (pocetSpatna >= pocetPrumerna && pocetSpatna >= pocetDobra) {
-			        System.out.println("Prevazujici kvalita spoluprace je: SPATNA");
-			    } else if (pocetPrumerna >= pocetSpatna && pocetPrumerna >= pocetDobra) {
-			        System.out.println("Prevazujici kvalita spoluprace je: PRUMERNA");
-			    } else {
-			        System.out.println("Prevazujici kvalita spoluprace je: DOBRA");
+			    
+			    if (pocetSpatna == 0 && pocetPrumerna == 0 && pocetDobra == 0) {
+			        System.out.println("Zadne spoluprace neexistuji");
+			        return;
 			    }
+			    else {
+			    	if (pocetSpatna >= pocetPrumerna && pocetSpatna >= pocetDobra) {
+				        System.out.println("Prevazujici kvalita spoluprace je: SPATNA");
+				    } else if (pocetPrumerna >= pocetSpatna && pocetPrumerna >= pocetDobra) {
+				        System.out.println("Prevazujici kvalita spoluprace je: PRUMERNA");
+				    } else {
+				        System.out.println("Prevazujici kvalita spoluprace je: DOBRA");
+				    }
+			    	
+			    }
+			    
 			    
 			    if(zamestnanecSNejviceVazbami != null) {
 			    	System.out.println("Zamestnanec s nejvice vazbami: " + zamestnanecSNejviceVazbami.getJmeno() + " " + zamestnanecSNejviceVazbami.getPrijmeni() + " - " + nejviceVazeb);
@@ -442,7 +478,7 @@ public class mainik {
 						typ = "Datový analytik";
 					}
 					else {
-						typ = "Bezpecnostní specialista";
+						typ = "Bezpečnostní specialista";
 					}
 					
 					fw.write(z3.getId() + ";" + z3.getJmeno() + ";" + z3.getPrijmeni() + ";" + z3.getRok_narozeni() + ";" + typ + "\n");
@@ -486,8 +522,51 @@ public class mainik {
 					System.out.println("Chyba pri nacitani souboru");
 				}
 				break;
-			case 11:break;
-			case 12:break;
+			case 11:
+				Databaze db=new Databaze();
+			    if (!db.connect("databaze.db"))
+			    {
+			    	System.out.println("K databázi se nebylo možné připojit");
+			    	return;
+			    }
+			    
+			    for (Zamestnanci zmst : mapa_zamestnanci.values()) {
+
+			        String typ;
+
+			        if (zmst instanceof Datovi_analytici) {
+			            typ = "Datový analytik";
+			        } else {
+			            typ = "Bezpečnostní specialista";
+			        }
+
+			        db.ulozeniZamestnance(
+			        	zmst.getId(),
+			        	zmst.getJmeno(),
+			        	zmst.getPrijmeni(),
+			        	zmst.getRok_narozeni(),
+			            typ
+			        );
+			    }
+			    System.out.println("Ulozeni do databaze probehlo, varovani muzete ignorovat - omezeni kvuli novejsi verzi Java");
+			    
+			    
+			    db.disconnect();
+				break;
+			case 12:
+				Databaze db2=new Databaze();
+			    if (!db2.connect("databaze.db"))
+			    {
+			    	System.out.println("K databázi se nebylo možné připojit");
+			    	return;
+			    }
+			    
+			    
+			    db2.nacteniZamestnance(mapa_zamestnanci);
+			    System.out.println("Nacteni z databaze probehlo, varovani muzete ignorovat - omezeni kvuli novejsi verzi Java");
+			    
+			    db2.disconnect();
+				break;
 			}
 			
 			if(menu_vyber == 13)
