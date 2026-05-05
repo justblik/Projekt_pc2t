@@ -46,22 +46,22 @@ public class mainik {
 		for(;;)
 		{
 			System.out.println("------------MENU----------------------------------------------");
-			System.out.println("1\tPridani zamestnance");										//DONE
-			System.out.println("2\tPridani spoluprace");										//DONE
-			System.out.println("3\tOdebrani zamestnance");										//DONE
-			System.out.println("4\tVyhledani zamestnance dle ID");								//DONE
-			System.out.println("5\tSpusteni dovednosti zamestnance");							//DONE
-			System.out.println("6\tAbecedni vypis zamestnancu podle prijmeni ve skupinach");	//DONE
-			System.out.println("7\tStatistiky");												//DONE	
-			System.out.println("8\tVypis poctu zamestnancu ve skupinach");						//DONE
-			System.out.println("9\tUlozeni zamestnance do souboru");							//DONE	
-			System.out.println("10\tNacteni zamestnancu ze souboru");							//DONE
+			System.out.println("1\tPridani zamestnance");										
+			System.out.println("2\tPridani spoluprace");										
+			System.out.println("3\tOdebrani zamestnance");										
+			System.out.println("4\tVyhledani zamestnance dle ID");								
+			System.out.println("5\tSpusteni dovednosti zamestnance");							
+			System.out.println("6\tAbecedni vypis zamestnancu podle prijmeni ve skupinach");	
+			System.out.println("7\tStatistiky");													
+			System.out.println("8\tVypis poctu zamestnancu ve skupinach");						
+			System.out.println("9\tUlozeni zamestnance do souboru");							
+			System.out.println("10\tNacteni zamestnancu ze souboru");							
 			System.out.println("11\tUlozeni vsech dat do SQL databaze po skonceni programu");
 			System.out.println("12\tNacteni vsech dat z SQL databaze po spusteni programu");
-			System.out.println("13\tKONEC");													//DONE
+			System.out.println("13\tKONEC");													
 			System.out.println("--------------------------------------------------------------");
 			
-			//System.out.println("\nVyberte cislo z nabidky: ");
+			
 			for(;;) {
 				System.out.println("\nVyberte cislo z nabidky: ");
 
@@ -75,13 +75,6 @@ public class mainik {
 			    break;
 			}
 			
-			/*if (!sc.hasNextInt()) 
-			{
-			    System.out.println("\nŠpatný vstup, zkuste to znovu\n\n");
-			    sc.next();
-			}
-			
-			menu_vyber=sc.nextInt();*/
 			
 			if(menu_vyber<1 || menu_vyber>13)
 			{
